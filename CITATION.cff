@@ -1,0 +1,23 @@
+cff-version: 1.2.0
+title: nise-binder-design
+message: If you use this software, please cite the original NISE paper.
+type: software
+authors:
+  - family-names: Abdul Sami
+    given-names: Abdullah
+license: MIT
+repository-code: https://github.com/abdullahabdulsami2026-coder/nise-binder-design
+references:
+  - type: article
+    title: Zero-shot design of drug-binding proteins via neural iterative selection−expansion
+    authors:
+      - family-names: Fry
+        given-names: Benjamin
+      - family-names: Slaw
+        given-names: Kaia
+      - family-names: Polizzi
+        given-names: Nicholas F.
+    journal: Nature
+    year: 2026
+    volume: "656"
+    doi: 10.1038/s41586-026-10670-w

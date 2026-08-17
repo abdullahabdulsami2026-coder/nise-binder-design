@@ -1,0 +1,41 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "nise-binder-design"
+version = "0.1.0"
+description = "A compact reimplementation of neural iterative selection–expansion (NISE) for small-molecule binder design."
+readme = "README.md"
+license = { text = "MIT" }
+requires-python = ">=3.10"
+authors = [{ name = "Abdullah Abdul Sami" }]
+keywords = ["protein-design", "ligand", "graph-neural-network", "NISE", "LASErMPNN"]
+classifiers = [
+  "Programming Language :: Python :: 3",
+  "License :: OSI Approved :: MIT License",
+  "Topic :: Scientific/Engineering :: Bio-Informatics",
+]
+dependencies = [
+  "numpy>=1.24",
+  "scipy>=1.10",
+  "torch>=2.1",
+  "matplotlib>=3.8",
+]
+
+[project.optional-dependencies]
+dev = ["pytest>=7.0"]
+
+[project.scripts]
+nise-binder = "nise_binder.cli:main"
+
+[project.urls]
+Homepage = "https://github.com/abdullahabdulsami2026-coder/nise-binder-design"
+Paper = "https://www.nature.com/articles/s41586-026-10670-w"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q"
