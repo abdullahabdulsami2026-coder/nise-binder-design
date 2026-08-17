@@ -7,6 +7,7 @@ from nise_binder.geometry import (
     four_helix_bundle,
     kabsch,
     rmsd,
+    to_pdb,
     write_pdb,
 )
 
@@ -40,3 +41,4 @@ def test_write_pdb(tmp_path: Path):
     write_pdb(str(path), pose, "A" * pose.n_res)
     text = path.read_text()
     assert "ATOM" in text and "HETATM" in text and "LIG" in text
+    assert "ATOM" in to_pdb(pose, "A" * pose.n_res)

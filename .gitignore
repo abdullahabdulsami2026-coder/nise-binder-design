@@ -13,6 +13,10 @@ build/
 .DS_Store
 checkpoints/
 results/
-*.pt
-*.pth
+data/pdb/
 .python-version
+.streamlit/secrets.toml
+.agents/
+.claude/
+*.pt
+!src/nise_binder/weights/*.pt

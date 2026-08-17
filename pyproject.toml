@@ -25,6 +25,7 @@ dependencies = [
 
 [project.optional-dependencies]
 dev = ["pytest>=7.0"]
+app = ["streamlit>=1.32"]
 
 [project.scripts]
 nise-binder = "nise_binder.cli:main"
@@ -35,6 +36,9 @@ Paper = "https://www.nature.com/articles/s41586-026-10670-w"
 
 [tool.setuptools.packages.find]
 where = ["src"]
+
+[tool.setuptools.package-data]
+nise_binder = ["py.typed", "weights/*"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]

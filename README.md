@@ -1,5 +1,7 @@
 # NISE binder design
 
+[![Open in Streamlit](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://share.streamlit.io/deploy?repository=abdullahabdulsami2026-coder/nise-binder-design&branch=main&mainModule=streamlit_app.py)
+
 A compact, runnable reimplementation of **neural iterative selection–expansion (NISE)** from:
 
 > Fry, Slaw & Polizzi. *Zero-shot design of drug-binding proteins via neural iterative selection−expansion.* Nature **656**, 237–249 (2026). [doi:10.1038/s41586-026-10670-w](https://www.nature.com/articles/s41586-026-10670-w)
@@ -64,8 +66,67 @@ Python 3.10+ (3.13 is fine). CPU is enough.
 ```bash
 python -m venv .venv
 source .venv/bin/activate
-pip install -e ".[dev]"
+pip install -e ".[dev,app]"
 ```
+
+## Run the app
+
+```bash
+nise-binder app
+```
+
+This opens a Streamlit UI in the browser: pick a public PDB complex (default: EPIC `9NZE`), run NISE with bundled weights, inspect designs in 3D, proofread pocket residues, and fit Kd or hydrolysis CSVs.
+
+## Share / deploy
+
+The live app is meant to be shown to a colleague without installing anything. Bundled CPU weights skip training; Streamlit Cloud defaults use a lighter NISE loop so the free tier does not run out of RAM.
+
+**Streamlit Community Cloud (recommended)**
+
+1. Make this GitHub repo public (or grant Streamlit access).
+2. Open [deploy this app](https://share.streamlit.io/deploy?repository=abdullahabdulsami2026-coder/nise-binder-design&branch=main&mainModule=streamlit_app.py), sign in with GitHub, and click Deploy.
+3. Send the resulting `*.streamlit.app` URL.
+
+If you already connected the repo in [share.streamlit.io](https://share.streamlit.io), set **Main file path** to `streamlit_app.py` and Python to 3.11.
+
+**Docker**
+
+```bash
+docker build -t nise-binder .
+docker run --rm -p 8501:8501 nise-binder
+```
+
+Then open http://localhost:8501. The same image can be hosted on Render, Fly.io, or any container host.
+
+**CLI with bundled weights**
+
+```bash
+nise-binder demo --source public --pdb 9NZE --outdir results
+```
+
+Use `--no-pretrained` only if you want to retrain LASEr-lite / Fold-lite from scratch.
+
+## Public PDB mode
+
+The NISE loop can start from **real crystal structures** downloaded from the RCSB PDB (no toy ligand):
+
+```bash
+nise-binder demo --source public --pdb 9NZE --outdir results
+```
+
+Catalog used for training and as UI presets:
+
+| PDB | Complex | Why it is here |
+|---|---|---|
+| 9NZE / 9NZG | EPIC ± Q51N + exatecan | Paper crystal structures |
+| 6W70 | ABLE + apixaban | Polizzi & DeGrado 2020 |
+| 8TN6 | PiB + rucaparib | COMBS binder held out in the paper |
+| 4JNJ | Streptavidin monomer + biotin | Paper sequence-recovery test |
+| 3PTB | Trypsin + benzamidine | Classic public complex |
+
+In the app, choose **Public PDB (RCSB)**. Coordinates and crystal sequences are authentic. Redesigned sequences still come from LASEr-lite, not from the authors’ trained weights, and the Kd/hydrolysis panels still need *your* measurements (or the published fitted constants).
+
+Official production models remain [LASErMPNN](https://github.com/polizzilab/LASErMPNN) and [NISE](https://github.com/polizzilab/NISE).
 
 ## Run the demo
 

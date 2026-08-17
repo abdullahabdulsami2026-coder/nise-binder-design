@@ -342,7 +342,7 @@ def noise_frames(ca: np.ndarray, sigma: float, rng: np.random.Generator) -> np.n
     return ca + shift
 
 
-def write_pdb(path: str, pose: Pose, sequence: str | None = None) -> None:
+def to_pdb(pose: Pose, sequence: str | None = None) -> str:
     seq = sequence or pose.sequence or ("G" * pose.n_res)
     lines = [f"HEADER    NISE design {pose.name}", f"REMARK    ligand {pose.ligand.name}"]
     atom = 1
@@ -360,8 +360,12 @@ def write_pdb(path: str, pose: Pose, sequence: str | None = None) -> None:
         )
         atom += 1
     lines.append("END")
+    return "\n".join(lines) + "\n"
+
+
+def write_pdb(path: str, pose: Pose, sequence: str | None = None) -> None:
     with open(path, "w", encoding="utf-8") as handle:
-        handle.write("\n".join(lines) + "\n")
+        handle.write(to_pdb(pose, sequence))
 
 
 def write_fasta(path: str, records: Iterable[tuple[str, str]]) -> None:
